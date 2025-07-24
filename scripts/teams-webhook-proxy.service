@@ -1,0 +1,14 @@
+[Unit]
+Description=Teams Webhook Proxy for Power Automate
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/bin/node /etc/prometheus/scripts/teams-webhook-proxy.js
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

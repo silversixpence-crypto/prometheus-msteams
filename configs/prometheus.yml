@@ -1,0 +1,15 @@
+rule_files:
+  - '/etc/prometheus/alerts/disk_alerts.yml'
+
+scrape_configs:
+  - job_name: 'node_exporter_tailnet'
+    file_sd_configs:
+      - files:
+          - '/etc/prometheus/targets/node_exporter.json'
+        refresh_interval: 30s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'localhost:9093'  # adjust if Alertmanager runs elsewhere

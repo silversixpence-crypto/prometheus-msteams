@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus MS Teams Bridge
+After=network.target prometheus-alertmanager.service teams-webhook-proxy.service
+Wants=prometheus-alertmanager.service teams-webhook-proxy.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/local/bin/prometheus-msteams -teams-incoming-webhook-url "http://localhost:3001/webhook" -template-file /usr/local/bin/default-message-card.tmpl -teams-request-uri /alertmanager -debug
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

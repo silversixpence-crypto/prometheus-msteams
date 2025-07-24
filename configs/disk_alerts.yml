@@ -1,0 +1,11 @@
+groups:
+  - name: Disk_Alerts
+    rules:
+      - alert: DiskAlmostFull
+        expr: 100 * (node_filesystem_size_bytes{fstype!="tmpfs",mountpoint!~"/(boot|run|var/lib/docker)"} - node_filesystem_avail_bytes{fstype!="tmpfs",mountpoint!~"/(boot|run|var/lib/docker)"}) / node_filesystem_size_bytes{fstype!="tmpfs",mountpoint!~"/(boot|run|var/lib/docker)"} > 90
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk usage over 90% on {{ $labels.instance }} ({{ $labels.mountpoint }})"
+          description: "Disk is almost full on {{ $labels.instance }}. Mountpoint {{ $labels.mountpoint }} is at {{ $value }}% usage."

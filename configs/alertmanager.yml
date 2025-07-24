@@ -1,0 +1,11 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'teams-notifier'
+
+receivers:
+  - name: 'teams-notifier'
+    webhook_configs:
+      - url: 'http://localhost:2000/alertmanager'
+        send_resolved: true
